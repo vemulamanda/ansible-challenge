@@ -1,0 +1,18 @@
+- name: Copy file to default location to load the site
+  ansible.builtin.copy:
+    src: '{{ carrole_default_src_path }}'
+    dest: '{{ carrole_default_dest_path }}'
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Remove default index html file from remote
+  ansible.builtin.file:
+    path: /usr/share/httpd/noindex/index.html
+    state: absent
+
+- name: Execute the command in remote shell
+  ansible.builtin.command: mv '{{ carrole_src_path }}' '{{ carrole_dest_path }}'
+  register: car_output
+  changed_when: false
+  notify: Restart Httpd

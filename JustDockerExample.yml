@@ -1,0 +1,15 @@
+---
+- hosts: webservers
+  become: true
+  become_user: root
+  tasks: 
+  - name: Install docker
+    yum: name=docker state=present
+  - name: start docker
+    service: name=docker state=started
+  - name: get the dockerfile
+    git: repo=https://github.com/Metroxe/one-html-page-challenge.git dest=/tmp
+  - name: Build dockerfile
+    command: chdir=/tmp/docker build -t deploy:ansible .
+  - name: Run the docker image
+    command: docker run -itd -P deploy:ansible

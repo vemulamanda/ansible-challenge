@@ -1,0 +1,2 @@
+snakerole_dest_path: /usr/share/httpd/noindex/index.html
+snakerole_default_dest_path: /usr/share/httpd/noindex/Snakegame.html

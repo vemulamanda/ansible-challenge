@@ -1,0 +1,7 @@
+ec2role_instance_type: t2.micro
+ec2role_image_id: ami-0ec0514235185af79
+ec2role_region: ap-southeast-2
+ec2role_security_group: default
+ec2role_subnet_id: subnet-08a19018f40d4d388
+ec2role_key_name: awspem
+ec2role_tag_name: Ansible-Slave

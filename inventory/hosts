@@ -1,0 +1,9 @@
+[webserver-car]
+172.31.7.133
+
+[webserver-snake]
+172.31.1.136
+
+[webservers]
+172.31.7.133
+172.31.1.136

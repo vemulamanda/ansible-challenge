@@ -1,0 +1,6 @@
+- name: Install webserver.
+  ansible.builtin.include_tasks: installwebserver.yml
+- name: Start service
+  ansible.builtin.include_tasks: startservice.yml
+- name: Deploy html file.
+  ansible.builtin.include_tasks: deployhtmlfile.yml

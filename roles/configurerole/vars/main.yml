@@ -1,0 +1,5 @@
+configurerole_files_to_copy:
+  - src: "{{ src_crt_cert_file_path }}"
+    dest: "{{ src_dest_cert_file_path }}"
+  - src: "{{ src_key_cert_file_path }}"
+    dest: "{{ dest_key_cert_file_path }}"

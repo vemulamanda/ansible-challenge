@@ -1,0 +1,7 @@
+- name: Deploying EC2 Servers
+  hosts:
+   - localhost
+  become: true
+  become_user: root
+  roles:
+   - ec2role

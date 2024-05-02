@@ -1,0 +1,36 @@
+# - name: Add line to sudoers file
+#  ansible.builtin.lineinfile:
+#    path: /etc/sudoers
+#    line: 'ec2-user ALL=(ALL) NOPASSWD: ALL'
+#    validate: 'visudo -cf %s'
+
+# - name: Ensure PasswordAuthentication is set to yes
+#  ansible.builtin.lineinfile:
+#    path: /etc/ssh/sshd_config
+#    regexp: '^#?PasswordAuthentication'
+#    line: 'PasswordAuthentication yes'
+#    state: present
+#    backup: true
+#  notify: Restart SSHD
+
+# - name: Generate SSH key pair 
+#  ansible.builtin.command: ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa -N "" 
+#  args:
+#    creates: ~/.ssh/id_rsa
+#  delegate_to: localhost
+
+# - name: Ensure SSH directory exists
+#  become: true
+#  ansible.builtin.file:
+#   path: ~/.ssh
+#    state: directory
+#    mode: "0700"
+
+# - name: Copy public key to remote server
+#  become: true
+#  ansible.posix.authorized_key:
+#    user: ec2-user
+#    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+#    state: present
+#    key_options: 'from=localhost'
+#    path: "~/.ssh/authorized_keys"

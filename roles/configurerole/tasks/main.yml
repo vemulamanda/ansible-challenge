@@ -1,0 +1,32 @@
+- name: Copying ssl configuration
+  ansible.builtin.blockinfile:
+    path: /etc/httpd/conf/httpd.conf
+    block: |
+      SSLEngine on
+      SSLCertificateFile /etc/ssl/certs/server.crt
+      SSLCertificateKeyFile /etc/ssl/private/server.key
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+    insertafter: EOF
+  check_mode: true
+
+- name: Ensure directory exists
+  ansible.builtin.file:
+    path: /etc/ssl/private
+    state: directory
+    mode: "0644"
+
+- name: Copy files to different folders
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "0644"
+  loop: "{{ configurerole_files_to_copy }}"
+#  vars_files:
+#    - ssl_certs.yml
+
+- name: Install mod_ssl on remote server
+  ansible.builtin.shell:
+    cmd: |
+      sudo yum install mod_ssl -y
+      sudo systemctl restart httpd
+  changed_when: false

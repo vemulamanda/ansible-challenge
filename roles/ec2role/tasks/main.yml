@@ -1,0 +1,27 @@
+- name: Create multiple EC2 instances
+  amazon.aws.ec2_instance:
+    instance_type: '{{ ec2role_instance_type }}'
+    image_id: '{{ ec2role_image_id }}'
+    count: 2
+    region: '{{ ec2role_region }}'
+    key_name: '{{ ec2role_key_name }}'
+    network:
+      assign_public_ip: true
+      security_group: '{{ ec2role_security_group }}'
+      vpc_subnet_id: '{{ ec2role_subnet_id }}'
+    state: present
+    tags:
+      Name: '{{ ec2role_tag_name }}'
+
+- name: Checking the remote facts of ec2 instances
+  amazon.aws.ec2_instance_info:
+    region: '{{ ec2role_region }}'
+    filters:
+      instance-state-name: running
+      "tag:Name": '{{ ec2role_tag_name }}'
+  register: ec2_facts
+
+- name: Display private and public IPs
+  ansible.builtin.debug:
+    msg: "Private IP: {{ item.private_ip_address }} - Public IP: {{ item.public_ip_address }}"
+  loop: "{{ ec2_facts.instances }}"

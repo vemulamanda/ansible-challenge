@@ -1,0 +1,34 @@
+---
+- name: Cloning Git
+  hosts:
+   - localhost
+  become: true
+  become_user: root
+  roles:
+   - gitrole
+
+- name: Deploying car website
+  hosts:
+   - webserver-car
+  become: true
+  become_user: root
+  roles:
+   - carrole
+
+- name: Deploying snake website
+  hosts:
+   - webserver-snake
+  become: true
+  become_user: root
+  roles:
+   - snakerole
+
+- name: Configuring ec2 servers
+  hosts:
+   - webservers
+  vars_files:
+   - /etc/ansible/ssl_certs.yml
+  become: true
+  become_user: root
+  roles:
+   - configurerole

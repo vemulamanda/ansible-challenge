@@ -1,0 +1,6 @@
+- name: Git checkout
+  delegate_to: localhost
+  ansible.builtin.git:
+    repo: '{{ gitrole_git_repo }}'
+    dest: '{{ gitrole_local_clone_path }}'
+    version: master
